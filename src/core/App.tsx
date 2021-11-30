@@ -11,8 +11,8 @@ const Container = styled.main`
   width: 100%;
   height: 100vh;
   background: #fff;
-  @media screen and (min-width: 375px) {
-    width: 375px;
+  @media screen and (min-width: 500px) {
+    width: 500px;
     margin: 0 auto;
   }
 `;
