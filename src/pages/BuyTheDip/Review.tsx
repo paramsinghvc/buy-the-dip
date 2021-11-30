@@ -80,7 +80,13 @@ const Review: FC<{
           trade is determined at time of execution.
         </Cell>
         <Cell display="flex" alignItems="center">
-          <Link to="/" style={{ width: '100%' }}>
+          <Link
+            to={{
+              pathname: '/',
+              search: '?isBought=true',
+            }}
+            style={{ width: '100%' }}
+          >
             <Button
               type="primary"
               shape="round"

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Cell, Grid } from '@mollycule/lattice';
 import styled, { keyframes } from 'styled-components';
-import { Button } from 'antd';
+import { Button, Switch } from 'antd';
 import { useSpring, animated, config } from 'react-spring';
+import { useLocation } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Trend } from '@assets/Trend.svg';
+import { ReactComponent as Transactions } from '@assets/Recent Transactions.svg';
 import Card from '@shared/components/Card';
 import Stories from '@pages/Stories';
 
@@ -28,8 +31,43 @@ const BuyDipButton = styled(Cell)`
   color: white;
 `;
 
+const HolderGrid = styled(Grid)<{ showGradient?: boolean }>`
+  background: #fff;
+  ${({ showGradient }: { showGradient?: boolean }) =>
+    showGradient &&
+    `
+    background-image:
+    radial-gradient(at top right, #ff9966, transparent),
+    radial-gradient(at bottom left, #ff5e62, transparent),
+    radial-gradient(at top left, #e1eec3, transparent);
+    background-size: 300% 200%;
+    `}
+  animation: ${gradient} 5s ease infinite;
+`;
+
+const StyledSwitch = styled(Switch)`
+  &.ant-switch {
+    background-color: #2c3e50 !important;
+    height: 32px;
+    padding: 0 15px;
+    .ant-switch-handle {
+      left: calc(100% - 18px - 6px);
+      top: 6px;
+    }
+  }
+`;
+
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 const Coin = () => {
   const [isStoriesOpen, setIsStoriesOpen] = useState(false);
+  const query = useQuery();
+  const navigate = useNavigate();
+  const isBought = query.get('isBought');
 
   const storiesProps = useSpring({
     opacity: isStoriesOpen ? 1 : 0,
@@ -45,8 +83,18 @@ const Coin = () => {
     setIsStoriesOpen(false);
   };
 
+  const handleSwitch = () => {
+    navigate('/');
+  };
+
   return (
-    <Grid pt="large" width="inherit" position="relative">
+    <HolderGrid
+      pt="large"
+      width="inherit"
+      position="relative"
+      showGradient={!!isBought}
+      pb="40px"
+    >
       <Cell>
         <Grid flow="column" justifyContent="space-between" px="20px">
           <Cell
@@ -61,13 +109,17 @@ const Coin = () => {
             </Cell>
           </Cell>
           <Cell className="pointer">
-            <BuyDipButton
-              borderRadius="xxlarge"
-              fontWeight="600"
-              onClick={openBuyTheDipStories}
-            >
-              Buy the Dip
-            </BuyDipButton>
+            {isBought ? (
+              <StyledSwitch defaultChecked onChange={handleSwitch} />
+            ) : (
+              <BuyDipButton
+                borderRadius="xxlarge"
+                fontWeight="600"
+                onClick={openBuyTheDipStories}
+              >
+                Buy the Dip
+              </BuyDipButton>
+            )}
           </Cell>
         </Grid>
         <Cell pt="xxxlarge">
@@ -165,15 +217,7 @@ const Coin = () => {
           </Card>
           <Cell mt="16px">
             <Card title="Recent Activity">
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
+              <Transactions />
             </Card>
           </Cell>
         </Cell>
@@ -190,7 +234,7 @@ const Coin = () => {
           <Stories onClose={closeBuyTheDipStories} />
         </Cell>
       )}
-    </Grid>
+    </HolderGrid>
   );
 };
 
