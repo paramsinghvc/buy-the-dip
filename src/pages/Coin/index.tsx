@@ -168,16 +168,18 @@ const Coin = () => {
           </Cell>
         </Cell>
       </Cell>
-      <Cell
-        as={animated.div}
-        position="fixed"
-        width="inherit"
-        height="100vh"
-        backgroundColor="background1"
-        style={storiesProps}
-      >
-        <Stories onClose={closeBuyTheDipStories} />
-      </Cell>
+      {isStoriesOpen && (
+        <Cell
+          as={animated.div}
+          position="fixed"
+          width="inherit"
+          height="100vh"
+          backgroundColor="background1"
+          style={storiesProps}
+        >
+          <Stories onClose={closeBuyTheDipStories} />
+        </Cell>
+      )}
     </Grid>
   );
 };
