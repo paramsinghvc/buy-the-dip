@@ -153,7 +153,12 @@ const data = [
         </Cell>
         <Cell zIndex="2" textAlign="center">
           <Link to="/buy-the-dip">
-            <Button type="primary" size="large" shape="round">
+            <Button
+              type="primary"
+              size="large"
+              shape="round"
+              style={{ fontWeight: 'bold' }}
+            >
               Setup buy the dip
             </Button>
           </Link>

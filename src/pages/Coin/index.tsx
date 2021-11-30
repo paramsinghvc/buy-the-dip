@@ -105,17 +105,27 @@ const Coin = () => {
         </Cell>
         <Cell px="20px" pt="24px" pb="24px">
           <Grid flow="column" alignItems="center" gap="9px">
-            <Button type="primary" shape="round" size="large">
+            <Button
+              type="primary"
+              shape="round"
+              size="large"
+              style={{ fontWeight: 'bold' }}
+            >
               Buy
             </Button>
-            <Button type="default" shape="round" size="large">
+            <Button
+              type="default"
+              shape="round"
+              size="large"
+              style={{ fontWeight: 'bold' }}
+            >
               Sell
             </Button>
           </Grid>
         </Cell>
       </Cell>
 
-      <Cell backgroundColor="background3" height="100%" flex="1">
+      <Cell height="100%" flex="1">
         <Cell px="20px" pt="28px">
           <Card title="My Holdings">
             <Grid pt="5px">
