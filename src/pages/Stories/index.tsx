@@ -1,7 +1,6 @@
 import React, { FC, useRef, useState, useEffect } from 'react';
 import { Cell, Grid } from '@mollycule/lattice';
 import styled from 'styled-components';
-import { animated } from '@react-spring/web';
 
 import { ReactComponent as CloseIcon } from '@assets/close.svg';
 import { ReactComponent as Hourglass } from '@assets/hourglass.svg';

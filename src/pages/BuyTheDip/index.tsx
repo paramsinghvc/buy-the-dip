@@ -2,8 +2,10 @@ import React from 'react';
 import { Grid, Cell } from '@mollycule/lattice';
 
 import { ReactComponent as ChevronLeft } from '@assets/chevron-left.svg';
-import { Button, Input } from 'antd';
+import { Button, Input, Select } from 'antd';
 import { Link } from 'react-router-dom';
+
+const { Option } = Select;
 
 const BuyTheDip = () => {
   return (
@@ -26,10 +28,25 @@ const BuyTheDip = () => {
             style={{ width: 100 }}
             autoFocus
           />
-          <span>of Bitcoin every time it dips</span> ____
+          <span>of Bitcoin every time it dips</span>
+          <Select defaultValue="10" style={{ width: 70 }}>
+            <Option value="5">5%</Option>
+            <Option value="10">10%</Option>
+            <Option value="20">20%</Option>
+            <Option value="30">30%</Option>
+            <Option value="40">40%</Option>
+            <Option value="50">50%</Option>
+          </Select>
           <br />
           <br />
-          <span>But don't buy more than </span>___<span> in a month.</span>
+          <span>But don't buy more than </span>
+          <Input
+            size="large"
+            defaultValue="500"
+            prefix="£"
+            style={{ width: 100 }}
+          />
+          <span> in a month.</span>
         </Cell>
       </Cell>
       <Cell alignSelf="end">
