@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Cell, Grid } from '@mollycule/lattice';
 import styled, { keyframes } from 'styled-components';
 import { Button, Switch } from 'antd';
@@ -63,8 +63,22 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
+const Noti = styled(animated.div)`
+  position: absolute;
+  padding: 24px;
+  background: #ffffffde;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  text-align: center;
+`;
+
 const Coin = () => {
   const [isStoriesOpen, setIsStoriesOpen] = useState(false);
+  const [isNotiOpen, setIsNotiOpen] = useState(false);
   const query = useQuery();
   const navigate = useNavigate();
   const isBought = query.get('isBought');
@@ -72,6 +86,21 @@ const Coin = () => {
   const storiesProps = useSpring({
     opacity: isStoriesOpen ? 1 : 0,
     top: isStoriesOpen ? '0' : '100vh',
+    config: config.stiff,
+  });
+
+  useEffect(() => {
+    setIsNotiOpen(!!isBought);
+    if (!!isBought) {
+      setTimeout(() => {
+        setIsNotiOpen(false);
+      }, 3000);
+    }
+  }, [isBought]);
+
+  const notiProps = useSpring({
+    opacity: isNotiOpen ? 1 : 0,
+    top: isNotiOpen ? '150px' : '-100px',
     config: config.stiff,
   });
 
@@ -234,6 +263,7 @@ const Coin = () => {
           <Stories onClose={closeBuyTheDipStories} />
         </Cell>
       )}
+      <Noti style={notiProps}>Congrats 🎉. You bought the dip ⚡</Noti>
     </HolderGrid>
   );
 };
